@@ -14,7 +14,9 @@ class PostController extends Controller
             'posts' => Post::orderBy('created_at', 'desc')->with('users:id,name,image')->withCount('comments', 'likes')
                 ->with('likes', function ($like) {
                     $like->where('users_id', auth()->user()->id)
-                        ->select('id', 'users_id', 'post_id', 'created_at')->get();
+                        ->select('id', 'users_id', 'post_id', 'created_at')
+                        ->join('users', 'users.id', '=', 'likes.users_id')
+                        ->select('likes.*', 'users.name', 'users.image')->get();
                 })
                 ->get()
         ], 200);
