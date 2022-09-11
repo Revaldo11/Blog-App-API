@@ -11,8 +11,16 @@ class CommentController extends Controller
     //get all comment of a post
     public function index($id)
     {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response([
+                'message' => 'Post not found.'
+            ], 403);
+        }
+
         return response([
-            'comment' => Post::find($id)->comments()->with('user:id,name,image')->get()
+            'comments' => $post->comments()->with('users:id,name,image')->get()
         ], 200);
     }
 

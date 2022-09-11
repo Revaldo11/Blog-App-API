@@ -18,12 +18,12 @@ class Controller extends BaseController
         if (!$image) {
             return null;
         }
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $fileName = time() . '.' . $image->getClientOriginalExtension();
         //save image
-        Storage::disk('local')->put($path . '/' . $imageName, file_get_contents($image));
+        Storage::disk('local')->put($path . '/' . $fileName, file_get_contents($image));
 
         //return the path of the image
         //Url is the base url of the project
-        return url('/storage/' . $path . '/' . $imageName);
+        return url('/storage/' . $path . '/' . $fileName);
     }
 }

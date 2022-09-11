@@ -11,7 +11,7 @@ class PostController extends Controller
     public function index()
     {
         return response([
-            'posts' => Post::orderBy('created_at', 'desc')->with('users:id,name,image')->withCount('comments', 'likes')
+            'posts' => Post::orderBy('created_at', 'asc')->with('users:id,name,image')->withCount('comments', 'likes')
                 ->with('likes', function ($like) {
                     $like->where('users_id', auth()->user()->id)
                         ->select('id', 'users_id', 'post_id', 'created_at')
